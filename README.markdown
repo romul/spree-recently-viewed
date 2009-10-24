@@ -8,5 +8,5 @@ Recently Viewed
     
 ### Usage
 
-Call /recently/viewed/products?product_id=@product.id to add product to recently viewed
+    <%= stylesheet_link_tag "/recently/viewed/products.css?product_id=#{@product.id}" %>
 

@@ -7,5 +7,6 @@ class RecentlyViewedExtension < Spree::Extension
   url "http://github.com/romul/spree-recently-viewed"
   
   def activate
+    Spree::Config.set(:recently_viewed_products_max_count => 5) if Spree::Config.instance
   end
 end

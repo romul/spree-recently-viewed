@@ -12,9 +12,10 @@ class RecentlyViewedProducts
       rvp = rvp.nil? ? [] : rvp.split(', ')
       rvp.delete(id)
       rvp << id
-      rvp.delete_at(0) if rvp.size > 10
-      env['rack.session']['recently_viewed_products'] = rvp.join(', ')
-      [200, {"Content-Type" => "text/html"}, ["/*\n#{rvp.inspect}\n#{session.inspect}\n*/"]]  
+      rvp_max_count = Spree::Config[:recently_viewed_products_max_count] || 5
+      rvp.delete_at(0) if rvp.size > rvp_max_count.to_i
+      session['recently_viewed_products'] = rvp.join(', ')
+      [200, {"Content-Type" => "text/css"}, ["/*#{session['recently_viewed_products']}*/"]]  
     else
       [404, {"Content-Type" => "text/html"}, ["Not Found"]]
     end
