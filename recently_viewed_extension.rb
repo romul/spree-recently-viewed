@@ -6,7 +6,6 @@ class RecentlyViewedExtension < Spree::Extension
   description "Adds recently viewed products to Spree"
   url "http://github.com/romul/spree-recently-viewed"
   
-  def activate 
-    Rails::Rack::Metal.metal_paths += [File.dirname(__FILE__) + "/app/metal"]
+  def activate
   end
 end

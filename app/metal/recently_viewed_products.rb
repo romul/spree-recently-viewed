@@ -1,22 +1,22 @@
-# Allow the metal piece to run in isolation  
-require(SPREE_ROOT + "/config/environment") unless defined?(Rails)  
+# Allow the metal piece to run in isolation
+require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Rails)
    
-class RecentlyViewedProducts < Rails::Rack::Metal  
+class RecentlyViewedProducts
   def self.call(env)  
     if env["PATH_INFO"] =~ /^\/recently\/viewed\/products/
       request = Rack::Request.new(env)
       params = request.params
-      id = params['id'].to_i
+      id = params['product_id']
       session = env['rack.session']
       rvp = session['recently_viewed_products']
-      rvp ||= []
+      rvp = rvp.nil? ? [] : rvp.split(', ')
       rvp.delete(id)
-      rvp << id      
+      rvp << id
       rvp.delete_at(0) if rvp.size > 10
-      session['recently_viewed_products'] = rvp
-      [200, {"Content-Type" => "text/html"}, ["//Product ##{id} added to recently viewed"]]  
-    else  
-      [404, {"Content-Type" => "text/html"}, ["Not Found"]]  
-    end  
-  end  
-end  
+      env['rack.session']['recently_viewed_products'] = rvp.join(', ')
+      [200, {"Content-Type" => "text/html"}, ["/*\n#{rvp.inspect}\n#{session.inspect}\n*/"]]  
+    else
+      [404, {"Content-Type" => "text/html"}, ["Not Found"]]
+    end
+  end
+end
