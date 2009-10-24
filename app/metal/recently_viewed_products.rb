@@ -15,7 +15,13 @@ class RecentlyViewedProducts
       rvp_max_count = Spree::Config[:recently_viewed_products_max_count] || 5
       rvp.delete_at(0) if rvp.size > rvp_max_count.to_i
       session['recently_viewed_products'] = rvp.join(', ')
-      [200, {"Content-Type" => "text/css"}, ["/*#{session['recently_viewed_products']}*/"]]  
+      headers = {
+        "Content-Type" => "text/css",
+        "Cache-Control" => "no-cache, no-store, max-age=0, must-revalidate",
+        "Pragma" => "no-cache",
+        "Expires" => "Fri, 23 Oct 2009 00:00:00 GMT"
+      }
+      [200, headers, ["/*#{session['recently_viewed_products']}*/"]]  
     else
       [404, {"Content-Type" => "text/html"}, ["Not Found"]]
     end
