@@ -1,0 +1,7 @@
+<% rvp = Product.find(:all, 
+          :conditions => ["id IN (?)", session['recently_viewed_products'].split(', ')]) %>
+<ul>
+  <% rvp.each do |p| %>
+    <li><%= link_to p.name, p %></li>
+  <% end -%>
+</ul>
