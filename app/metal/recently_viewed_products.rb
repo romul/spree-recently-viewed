@@ -1,5 +1,5 @@
 # Allow the metal piece to run in isolation
-require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Rails)
+require(SPREE_ROOT + "/config/environment") unless defined?(Rails)
    
 class RecentlyViewedProducts
   def self.call(env)  
