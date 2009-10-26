@@ -1,12 +1,9 @@
 <% 
-  rvp_ids = session['recently_viewed_products'].nil? ? [] : 
-              session['recently_viewed_products'].split(', ')    
-  rvp = Product.find(:all, :conditions => ["id IN (?)", rvp_ids])
-  sorted_rvp = Array.new(rvp.size)
-  rvp.map {|p| sorted_rvp[rvp_ids.index(p.id.to_s)] = p }
+  rvp_ids = get_recently_viewed_products_ids   
+  rvp = Product.find_by_array_of_ids(rvp_ids)
 %>
 <ul>
-  <% sorted_rvp.each do |p| %>
+  <% rvp.each do |p| %>
     <li><%= link_to p.name, p %></li>
   <% end -%>
 </ul>
