@@ -21,15 +21,8 @@ class RecentlyViewedExtension < Spree::Extension
     
     Product.class_eval do
       def self.find_by_array_of_ids(ids)
-        ids.map! { |id| id.to_i }
         products = Product.find(:all, :conditions => ["id IN (?)", ids])
-        sorted_products = Array.new(ids.size)
-        products.each do |p|
-          idx = ids.index(p.id)
-          sorted_products[idx] = p unless idx.nil?
-        end
-        sorted_products.delete(nil)
-        sorted_products     
+        ids.map{|id| products.detect{|p| p.id == id.to_i}}.compact
       end
     end
   end
