@@ -17,6 +17,9 @@ class RecentlyViewedExtension < Spree::Extension
           session['recently_viewed_products'].split(', ')
         end
       end
+      def get_recently_viewed_products
+        Product.find_by_array_of_ids(get_recently_viewed_products_ids)
+      end
     end
     
     Product.class_eval do

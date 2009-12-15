@@ -1,9 +1,8 @@
-<% 
-  rvp_ids = get_recently_viewed_products_ids   
-  rvp = Product.find_by_array_of_ids(rvp_ids)
-%>
-<ul>
-  <% rvp.each do |p| %>
-    <li><%= link_to p.name, p %></li>
-  <% end -%>
-</ul>
+<% if get_recently_viewed_products.any? %>
+  <h3>Recently viewed products</h3>
+  <ul>
+    <% get_recently_viewed_products.each do |p| %>
+      <li><%= link_to p.name, p %></li>
+    <% end -%>
+  </ul>
+<% end %>
