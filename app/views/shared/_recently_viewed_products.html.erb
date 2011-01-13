@@ -1,5 +1,5 @@
 <% if get_recently_viewed_products.any? %>
-  <h3>Recently viewed products</h3>
+  <h3><%= t :recently_viewed_products %></h3>
   <ul>
     <% get_recently_viewed_products.each do |p| %>
       <li><%= link_to p.name, p %></li>
